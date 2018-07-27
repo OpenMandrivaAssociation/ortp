@@ -15,6 +15,7 @@ Source0:	https://linphone.org/releases/sources/%{name}/%{name}-%{version}.tar.gz
 Patch0:		ortp-1.0.2-cmake-fix-pkgconfig-pc-file.patch
 # (wally) alow overriding cmake config file location from cmd line
 Patch1:		ortp-1.0.2-cmake-config-location.patch
+BuildRequires:	cmake
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	bctoolbox-static-devel
