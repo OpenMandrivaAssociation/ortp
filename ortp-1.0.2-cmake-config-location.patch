@@ -1,0 +1,12 @@
+diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
+--- ./CMakeLists.txt.orig	2017-12-31 15:40:22.768801199 +0200
++++ ./CMakeLists.txt	2017-12-31 15:41:03.239263292 +0200
+@@ -206,7 +206,7 @@ configure_file(ORTPConfig.cmake.in
+ 	@ONLY
+ )
+ 
+-set(CONFIG_PACKAGE_LOCATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/cmake")
++set(CONFIG_PACKAGE_LOCATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/cmake" CACHE PATH "CMake configuration file location")
+ install(EXPORT ${EXPORT_TARGETS_NAME}Targets
+ 	FILE ORTPTargets.cmake
+ 	DESTINATION ${CONFIG_PACKAGE_LOCATION}

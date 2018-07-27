@@ -1,18 +1,23 @@
-%define major 10
+%define major 13
 %define libname %mklibname %{name} %{major}
 %define devname %mklibname %{name} -d
+%define _disable_rebuild_configure 1
 
 Summary:	Real-time Transport Protocol Stack
 Name:		ortp
-Version:	0.25.0
+Version:	1.0.2
 Release:	1
 License:	LGPLv2+
 Group:		Communications
 Url:		http://linphone.org/ortp/
-Source0:	http://download.savannah.gnu.org/releases-noredirect/linphone/ortp/sources/%{name}-%{version}.tar.gz
-Source1:	http://download.savannah.gnu.org/releases-noredirect/linphone/ortp/sources/%{name}-%{version}.tar.gz.sig
+Source0:	https://linphone.org/releases/sources/%{name}/%{name}-%{version}.tar.gz
+# (wally) fix pkconfig pc file when cmake is used
+Patch0:		ortp-1.0.2-cmake-fix-pkgconfig-pc-file.patch
+# (wally) alow overriding cmake config file location from cmd line
+Patch1:		ortp-1.0.2-cmake-config-location.patch
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(openssl)
+BuildRequires:	bctoolbox-static-devel
 
 %description
 oRTP is a LGPL licensed C library implementing the RTP protocol
@@ -39,27 +44,31 @@ This package contains header files and development libraries needed to
 develop programs using the oRTP library.
 
 %prep
-%setup -q
+%setup -qn %{name}-%{version}-0
+%apply_patches
 
 %build
-%configure2_5x \
-	--disable-strict \
-	--enable-shared \
-	--disable-static \
-	--enable-ipv6
+export CC=gcc
+export CXX=g++
+%cmake \
+  -DENABLE_STATIC=NO \
+  -DENABLE_STRICT:BOOL=NO \
+  -DENABLE_DOC:BOOL=NO \
+  -DCONFIG_PACKAGE_LOCATION:PATH=%{_libdir}/cmake/oRTP
 
 %make
 
 %install
-%makeinstall_std
+%makeinstall_std -C build
 
 %files -n %{libname}
 %{_libdir}/libortp.so.%{major}*
 
 %files -n %{devname}
-%doc AUTHORS COPYING ChangeLog INSTALL README TODO
+%doc AUTHORS COPYING ChangeLog NEWS README.md
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/%{name}
+%{_libdir}/cmake/oRTP/
 %{_docdir}/%{name}-%{version}
 
