@@ -46,7 +46,7 @@ develop programs using the oRTP library.
 
 %prep
 %setup -qn %{name}-%{version}-0
-%apply_patches
+%autopatch -p1
 
 %build
 export CC=gcc
