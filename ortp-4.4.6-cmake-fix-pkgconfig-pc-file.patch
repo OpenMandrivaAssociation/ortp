@@ -1,0 +1,17 @@
+diff -up ortp-4.4.6/ortp.pc.in.omv~ ortp-4.4.6/ortp.pc.in
+--- ortp-4.4.6/ortp.pc.in.omv~	2020-11-09 21:13:14.361227709 +0100
++++ ortp-4.4.6/ortp.pc.in	2020-11-09 21:13:25.250715065 +0100
+@@ -1,4 +1,3 @@
+-# This is a comment
+ prefix=@prefix@
+ exec_prefix=@exec_prefix@
+-includedir=@includedir@
++includedir=@includedir@/ortp
+@@ -6,5 +5,5 @@ includedir=@includedir@
+ Name: oRTP 
+ Description: Implement the RFC3550 (RTP) with a easy to use API with high and low level access.
+ Version: @ORTP_PKGCONFIG_VERSION@
+-Libs: -L@libdir@ -lortp @ORTPDEPS_LIBS@
+-Cflags: -I@includedir@ @ORTPDEPS_CFLAGS@
++Libs: -lortp @ORTPDEPS_LIBS@
++Cflags: -I@includedir@/ortp @ORTPDEPS_CFLAGS@

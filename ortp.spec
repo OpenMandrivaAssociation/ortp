@@ -1,21 +1,19 @@
-%define major 13
+%define major 15
 %define libname %mklibname %{name} %{major}
 %define devname %mklibname %{name} -d
 %define _disable_rebuild_configure 1
 
 Summary:	Real-time Transport Protocol Stack
 Name:		ortp
-Version:	1.0.2
-Release:	2
+Version:	4.4.6
+Release:	1
 License:	LGPLv2+
 Group:		Communications
-Url:		http://linphone.org/ortp/
-Source0:	https://linphone.org/releases/sources/%{name}/%{name}-%{version}.tar.gz
-# (wally) fix pkconfig pc file when cmake is used
-Patch0:		ortp-1.0.2-cmake-fix-pkgconfig-pc-file.patch
-# (wally) alow overriding cmake config file location from cmd line
-Patch1:		ortp-1.0.2-cmake-config-location.patch
+Url:		https://gitlab.linphone.org/BC/public/ortp
+Source0:	https://gitlab.linphone.org/BC/public/ortp/-/archive/%{version}/ortp-%{version}.tar.bz2
+Patch0:		ortp-4.4.6-cmake-fix-pkgconfig-pc-file.patch
 BuildRequires:	cmake
+BuildRequires:	ninja
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	bctoolbox-static-devel
@@ -45,31 +43,25 @@ This package contains header files and development libraries needed to
 develop programs using the oRTP library.
 
 %prep
-%setup -qn %{name}-%{version}-0
-%autopatch -p1
+%autosetup -p1
+%cmake \
+	-DENABLE_STATIC:BOOL=NO \
+	-DENABLE_STRICT:BOOL=NO \
+	-DENABLE_DOC:BOOL=NO \
+	-G Ninja
 
 %build
-export CC=gcc
-export CXX=g++
-%cmake \
-  -DENABLE_STATIC=NO \
-  -DENABLE_STRICT:BOOL=NO \
-  -DENABLE_DOC:BOOL=NO \
-  -DCONFIG_PACKAGE_LOCATION:PATH=%{_libdir}/cmake/oRTP
-
-%make
+%ninja_build -C build
 
 %install
-%makeinstall_std -C build
+%ninja_install -C build
+rm -rf %{buildroot}%{_docdir}
 
 %files -n %{libname}
 %{_libdir}/libortp.so.%{major}*
 
 %files -n %{devname}
-%doc AUTHORS COPYING ChangeLog NEWS README.md
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/%{name}
-%{_libdir}/cmake/oRTP/
-%{_docdir}/%{name}-%{version}
-
+%{_libdir}/cmake/ortp
