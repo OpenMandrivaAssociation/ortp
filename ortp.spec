@@ -9,7 +9,7 @@ Version:	4.4.24
 Release:	1
 License:	LGPLv2+
 Group:		Communications
-Url:		https://gitlab.linphone.org/BC/public/ortp
+Url:		https://linphone.org/
 Source0:	https://gitlab.linphone.org/BC/public/%{name}/-/archive/%{version}/%{name}-%{version}.tar.bz2
 Patch0:		ortp-4.4.6-cmake-fix-pkgconfig-pc-file.patch
 BuildRequires:	cmake
