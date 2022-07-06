@@ -5,7 +5,7 @@
 
 Summary:	Real-time Transport Protocol Stack
 Name:		ortp
-Version:	5.0.68
+Version:	5.1.45
 Release:	1
 License:	LGPLv2+
 Group:		Communications
@@ -59,15 +59,16 @@ develop programs using the oRTP library.
 
 %prep
 %autosetup -p1
+
+%build
 %cmake \
 	-DENABLE_STATIC:BOOL=NO \
 	-DENABLE_STRICT:BOOL=NO \
 	-DENABLE_DOC:BOOL=NO \
 	-G Ninja
-
-%build
-%ninja_build -C build
+%ninja_build
 
 %install
 %ninja_install -C build
 rm -rf %{buildroot}%{_docdir}
+
