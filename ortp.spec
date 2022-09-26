@@ -5,7 +5,7 @@
 
 Summary:	Real-time Transport Protocol Stack
 Name:		ortp
-Version:	5.1.45
+Version:	5.1.61
 Release:	1
 License:	LGPLv2+
 Group:		Communications
