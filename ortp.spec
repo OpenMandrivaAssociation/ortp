@@ -1,11 +1,10 @@
 %define major 15
-%define libname %mklibname %{name} %{major}
+%define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
-%define _disable_rebuild_configure 1
 
 Summary:	Real-time Transport Protocol Stack
 Name:		ortp
-Version:	5.1.61
+Version:	5.1.67
 Release:	1
 License:	LGPLv2+
 Group:		Communications
