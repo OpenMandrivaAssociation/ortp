@@ -2,6 +2,10 @@
 %define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
 
+%bcond_with     doc
+%bcond_with     static
+%bcond_with     strict
+
 Summary:	Real-time Transport Protocol Stack
 Name:		ortp
 Version:	5.1.67
@@ -61,9 +65,9 @@ develop programs using the oRTP library.
 
 %build
 %cmake \
-	-DENABLE_STATIC:BOOL=NO \
-	-DENABLE_STRICT:BOOL=NO \
-	-DENABLE_DOC:BOOL=NO \
+	-DENABLE_STATIC:BOOL=%{?with_static:ON}%{?!with_static:OFF} \
+	-DENABLE_STRICT:BOOL=%{?with_strict:ON}%{?!with_strict:OFF} \
+	-DENABLE_DOC:BOOL=%{?with_doc:ON}%{?!with_doc:OFF} \
 	-G Ninja
 %ninja_build
 
