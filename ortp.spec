@@ -8,7 +8,7 @@
 
 Summary:	Real-time Transport Protocol Stack
 Name:		ortp
-Version:	5.1.72
+Version:	5.2.0
 Release:	1
 License:	LGPLv2+
 Group:		Communications
@@ -25,6 +25,9 @@ BuildRequires:	bctoolbox-static-devel
 oRTP is a LGPL licensed C library implementing the RTP protocol
 (rfc1889). It is available for most unix clones (primilarly Linux and
 HP-UX), and Microsoft Windows.
+
+%files
+%{_bindir}/%{name}_tester
 
 #---------------------------------------------------------------------------
 
