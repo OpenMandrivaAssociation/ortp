@@ -18,6 +18,7 @@ Patch0:		ortp-4.4.6-cmake-fix-pkgconfig-pc-file.patch
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	doxygen
+BuildRequires:	cmake(bctoolbox)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	bctoolbox-static-devel
 
