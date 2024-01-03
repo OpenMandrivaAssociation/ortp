@@ -14,13 +14,13 @@ License:	LGPLv2+
 Group:		Communications
 Url:		https://linphone.org/
 Source0:	https://gitlab.linphone.org/BC/public/%{name}/-/archive/%{version}/%{name}-%{version}.tar.bz2
-Patch0:		ortp-4.4.6-cmake-fix-pkgconfig-pc-file.patch
+Patch0:		ortp-5.3.6-cmake-fix_cmake_path.patch
+Patch1:		ortp-4.4.6-cmake-fix-pkgconfig-pc-file.patch
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	doxygen
 BuildRequires:	cmake(bctoolbox)
 BuildRequires:	pkgconfig(openssl)
-BuildRequires:	bctoolbox-static-devel
 
 %description
 oRTP is a LGPL licensed C library implementing the RTP protocol
@@ -28,7 +28,8 @@ oRTP is a LGPL licensed C library implementing the RTP protocol
 HP-UX), and Microsoft Windows.
 
 %files
-%{_bindir}/%{name}_tester
+%{_bindir}/%{name}-tester
+%{_datadir}/ortp-tester/
 
 #---------------------------------------------------------------------------
 
@@ -60,7 +61,7 @@ develop programs using the oRTP library.
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/%{name}
-%{_libdir}/cmake/ortp
+%{_datadir}/cmake/Ortp
 
 #---------------------------------------------------------------------------
 
