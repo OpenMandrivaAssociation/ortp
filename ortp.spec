@@ -2,6 +2,9 @@
 %define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
 
+# exclude unwanted cmake requires
+%global __provides_exclude_from ^%{_datadir}/cmake/*/Find.*cmake$
+
 %bcond_with		doc
 %bcond_with		static
 %bcond_without	strict
@@ -9,7 +12,7 @@
 Summary:	Real-time Transport Protocol Stack
 Name:		ortp
 Version:	5.3.15
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		Communications
 Url:		https://linphone.org/
