@@ -11,7 +11,7 @@
 
 Summary:	Real-time Transport Protocol Stack
 Name:		ortp
-Version:	5.3.63
+Version:	5.3.69
 Release:	1
 License:	LGPLv2+
 Group:		Communications
