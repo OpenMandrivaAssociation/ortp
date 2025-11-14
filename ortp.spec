@@ -8,6 +8,9 @@
 %bcond_with		doc
 %bcond_with		static
 %bcond_without	strict
+%bcond unit_tests		1
+%bcond unit_tests_install	0
+
 
 Summary:	Real-time Transport Protocol Stack
 Name:		ortp
@@ -17,22 +20,37 @@ License:	LGPLv2+
 Group:		Communications
 Url:		https://linphone.org/
 Source0:	https://gitlab.linphone.org/BC/public/%{name}/-/archive/%{version}/%{name}-%{version}.tar.bz2
-Patch0:		ortp-5.3.6-cmake-fix_cmake_path.patch
-Patch1:		ortp-4.4.6-cmake-fix-pkgconfig-pc-file.patch
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	doxygen
 BuildRequires:	cmake(bctoolbox)
 BuildRequires:	pkgconfig(openssl)
 
+BuildSystem:	cmake
+BuildOption:	-DENABLE_STATIC:BOOL=%{?with_static:ON}%{?!with_static:OFF}
+BuildOption:	-DENABLE_STRICT:BOOL=%{?with_strict:ON}%{?!with_strict:OFF}
+BuildOption:	-DENABLE_UNIT_TESTS:BOOL=%{?with_unit_tests:ON}%{?!with_unit_tests:OFF}
+BuildOption:	-DENABLE_DOC:BOOL=%{?with_doc:ON}%{?!with_doc:OFF}
+
+%patchlist
+ortp-5.3.6-cmake-fix_cmake_path.patch
+ortp-4.4.6-cmake-fix-pkgconfig-pc-file.patch
+ortp-5.4.50-dont-install-docs.patch
+# don't install unit tester
+%if %{with unit_tests} && ! %{with unit_tests_install}
+ortp-5.4.50-dont-install-tester.patch
+%endif
+
 %description
 oRTP is a LGPL licensed C library implementing the RTP protocol
 (rfc1889). It is available for most unix clones (primilarly Linux and
 HP-UX), and Microsoft Windows.
 
+%if %{with unit_tests_install}
 %files
 %{_bindir}/%{name}-tester
 %{_datadir}/ortp-tester/
+%endif
 
 #---------------------------------------------------------------------------
 
@@ -67,19 +85,4 @@ develop programs using the oRTP library.
 %{_datadir}/cmake/Ortp
 
 #---------------------------------------------------------------------------
-
-%prep
-%autosetup -p1
-
-%build
-%cmake \
-	-DENABLE_STATIC:BOOL=%{?with_static:ON}%{?!with_static:OFF} \
-	-DENABLE_STRICT:BOOL=%{?with_strict:ON}%{?!with_strict:OFF} \
-	-DENABLE_DOC:BOOL=%{?with_doc:ON}%{?!with_doc:OFF} \
-	-G Ninja
-%ninja_build
-
-%install
-%ninja_install -C build
-rm -rf %{buildroot}%{_docdir}
 

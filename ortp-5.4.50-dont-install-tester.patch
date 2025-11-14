@@ -1,0 +1,13 @@
+--- a/tester/CMakeLists.txt
++++ b/tester/CMakeLists.txt
+@@ -49,7 +49,7 @@
+ 	set_target_properties(ortp-tester PROPERTIES LINKER_LANGUAGE CXX)
+ 	target_link_libraries(ortp-tester PRIVATE ${ORTP_LIBS_FOR_TESTER} ${BCToolbox_tester_TARGET})
+ 
+-	if(NOT IOS)
++	if(NOT IOS AND NOT UNIX)
+ 		install(TARGETS ortp-tester
+ 			RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+ 			LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+
+
